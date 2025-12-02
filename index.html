@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumen - Stop Wasting Money You Don't See</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #000;
+            overflow-x: hidden;
+        }
+
+        /* Subtle text styling */
+        .text-primary {
+            color: #f5f5f7;
+        }
+
+        .text-secondary {
+            color: #86868b;
+        }
+
+        /* Clean card style */
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Primary button - Apple blue */
+        .btn-primary {
+            background: #0071e3;
+            color: #fff;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: #0077ed;
+        }
+
+        /* Secondary button */
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Navbar */
+        .navbar-scrolled {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Section divider */
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Counter */
+        .counter-value {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Pricing highlight */
+        .pricing-featured {
+            background: rgba(0, 113, 227, 0.08);
+            border: 1px solid rgba(0, 113, 227, 0.3);
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Subtle gradient for hero */
+        .hero-gradient {
+            background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 113, 227, 0.15), transparent);
+        }
+
+        /* Hero headline gradient */
+        .hero-headline {
+            background: linear-gradient(to bottom, #ffffff 0%, #ffffff 40%, #0071e3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex items-center justify-between h-14">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center">
+                        <svg class="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"/>
+                        </svg>
+                    </div>
+                    <span class="text-lg font-semibold tracking-tight text-primary">Lumen</span>
+                </a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#features" class="text-sm text-secondary hover:text-white transition-colors">Features</a>
+                    <a href="#pricing" class="text-sm text-secondary hover:text-white transition-colors">Pricing</a>
+                    <a href="#api" class="text-sm text-secondary hover:text-white transition-colors">API</a>
+                    <button id="signinBtn" class="text-sm text-secondary hover:text-white transition-colors auth-btn">Sign In</button>
+                    <button id="navCTA" class="btn-primary px-5 py-2 rounded-full text-sm auth-btn">
+                        Start Free Trial
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="menuBtn" class="md:hidden w-10 h-10 flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed inset-0 z-50 bg-black flex flex-col items-center justify-center gap-8">
+        <button id="closeMenu" class="absolute top-4 right-6 w-10 h-10 flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+        <a href="#features" class="text-2xl font-medium text-primary">Features</a>
+        <a href="#pricing" class="text-2xl font-medium text-primary">Pricing</a>
+        <a href="#api" class="text-2xl font-medium text-primary">API</a>
+        <button class="btn-primary px-8 py-3 rounded-full text-lg mt-4">
+            Start Free Trial
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen hero-gradient">
+        <div class="max-w-6xl mx-auto px-6 pt-32 pb-20">
+            <!-- Centered Hero Content -->
+            <div class="text-center max-w-5xl mx-auto">
+                <div class="reveal">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8">
+                        <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                        <span class="text-sm text-secondary">Trusted by 2,000+ companies</span>
+                    </div>
+                </div>
+
+                <h1 class="reveal text-6xl sm:text-7xl md:text-[6rem] lg:text-[7.5rem] xl:text-[9rem] font-bold tracking-[-0.04em] leading-[0.85] mb-8 hero-headline">
+                    Stop Wasting Money<br>
+                    You Don't See.
+                </h1>
+
+                <p class="reveal text-lg text-secondary leading-relaxed mb-10 max-w-xl mx-auto">
+                    Lumen scans invoices, subscriptions, and cloud bills to save your business thousands — automatically.
+                </p>
+
+                <div class="reveal flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                    <button class="btn-primary px-8 py-4 rounded-full text-base inline-flex items-center justify-center gap-2">
+                        Start Free Trial
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </button>
+                    <button class="btn-secondary px-8 py-4 rounded-full text-base inline-flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/>
+                        </svg>
+                        Watch Demo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Mockup - Below Hero -->
+            <div class="reveal max-w-4xl mx-auto">
+                <div class="card rounded-2xl overflow-hidden shadow-2xl shadow-black/50">
+                    <div class="bg-[#0a0a0a] p-6 md:p-8">
+                        <!-- Window Controls -->
+                        <div class="flex items-center gap-2 mb-6">
+                            <div class="w-3 h-3 rounded-full bg-[#ff5f57]"></div>
+                            <div class="w-3 h-3 rounded-full bg-[#febc2e]"></div>
+                            <div class="w-3 h-3 rounded-full bg-[#28c840]"></div>
+                            <span class="ml-4 text-xs text-secondary">Lumen Dashboard</span>
+                        </div>
+
+                        <!-- Dashboard Content -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                            <div class="bg-white/5 rounded-xl p-4">
+                                <span class="text-xs text-secondary block mb-2">Monthly Spend</span>
+                                <p class="text-xl md:text-2xl font-semibold text-primary">$12,847</p>
+                            </div>
+                            <div class="bg-white/5 rounded-xl p-4">
+                                <span class="text-xs text-secondary block mb-2">Savings Found</span>
+                                <p class="text-xl md:text-2xl font-semibold text-green-500">$<span id="heroCounter" class="counter-value">0</span></p>
+                            </div>
+                            <div class="bg-white/5 rounded-xl p-4">
+                                <span class="text-xs text-secondary block mb-2">Active Subs</span>
+                                <p class="text-xl md:text-2xl font-semibold text-primary">47</p>
+                            </div>
+                            <div class="bg-white/5 rounded-xl p-4">
+                                <span class="text-xs text-secondary block mb-2">Issues</span>
+                                <p class="text-xl md:text-2xl font-semibold text-amber-500">7</p>
+                            </div>
+                        </div>
+
+                        <!-- Chart Area -->
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-white/5 rounded-xl p-4">
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="text-xs text-secondary">Expense Breakdown</span>
+                                    <span class="text-xs text-[#0071e3]">This Month</span>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-xs text-secondary w-12">AWS</span>
+                                        <div class="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                            <div class="h-full rounded-full bg-white transition-all duration-1000" style="width: 0%" data-width="65%"></div>
+                                        </div>
+                                        <span class="text-xs text-secondary w-14 text-right">$4,200</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-xs text-secondary w-12">SaaS</span>
+                                        <div class="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                            <div class="h-full rounded-full bg-white/70 transition-all duration-1000" style="width: 0%" data-width="45%"></div>
+                                        </div>
+                                        <span class="text-xs text-secondary w-14 text-right">$2,890</span>
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-xs text-secondary w-12">Office</span>
+                                        <div class="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                            <div class="h-full rounded-full bg-white/50 transition-all duration-1000" style="width: 0%" data-width="25%"></div>
+                                        </div>
+                                        <span class="text-xs text-secondary w-14 text-right">$1,450</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Alert -->
+                            <div class="bg-white/5 rounded-xl p-4 flex flex-col justify-between">
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="text-xs text-secondary">Recent Alerts</span>
+                                    <span class="text-xs text-red-400">3 Critical</span>
+                                </div>
+                                <div class="flex items-center gap-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                                    <div class="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-medium text-red-400">Duplicate Adobe CC</p>
+                                        <p class="text-xs text-secondary">Save $599/mo</p>
+                                    </div>
+                                    <button class="text-xs text-red-400 hover:text-red-300 font-medium px-3 py-1.5 rounded-lg bg-red-500/10">Fix</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-24 relative">
+        <div class="divider"></div>
+        <div class="max-w-6xl mx-auto px-6 pt-24">
+            <div class="text-center mb-16">
+                <h2 class="reveal text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4 text-primary">
+                    How Lumen Works
+                </h2>
+                <p class="reveal text-lg text-secondary">Three steps to financial clarity</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="reveal card rounded-2xl p-8 relative">
+                    <div class="text-5xl font-bold text-white/5 absolute top-6 right-6">01</div>
+                    <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-primary">Connect Accounts</h3>
+                    <p class="text-secondary leading-relaxed">Link Gmail, bank feeds, and cloud services with bank-level security.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="reveal card rounded-2xl p-8 relative">
+                    <div class="text-5xl font-bold text-white/5 absolute top-6 right-6">02</div>
+                    <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-primary">AI Detects Leaks</h3>
+                    <p class="text-secondary leading-relaxed">Our AI finds duplicate subscriptions, unused seats, and overcharges.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="reveal card rounded-2xl p-8 relative">
+                    <div class="text-5xl font-bold text-white/5 absolute top-6 right-6">03</div>
+                    <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-primary">Save Money</h3>
+                    <p class="text-secondary leading-relaxed">Get actionable reports showing exactly where and how to save.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Demo -->
+    <section class="py-24 relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="reveal text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4 text-primary">
+                    Your Savings Command Center
+                </h2>
+                <p class="reveal text-lg text-secondary">Real-time visibility into every dollar</p>
+            </div>
+
+            <!-- Metrics Grid -->
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="reveal card rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-secondary">Total Analyzed</span>
+                        <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-4xl font-semibold text-primary mb-2">$<span class="counter" data-target="47832">0</span></p>
+                    <div class="flex items-center gap-2">
+                        <span class="text-green-500 text-sm">↑ 12%</span>
+                        <span class="text-secondary text-sm">from last month</span>
+                    </div>
+                </div>
+
+                <div class="reveal card rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-secondary">Savings Found</span>
+                        <div class="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-4xl font-semibold text-green-500 mb-2">$<span class="counter" data-target="2732">0</span></p>
+                    <span class="text-secondary text-sm">Across 14 subscriptions</span>
+                </div>
+
+                <div class="reveal card rounded-2xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-secondary">Issues Found</span>
+                        <div class="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-4xl font-semibold text-amber-500 mb-2"><span class="counter" data-target="7">0</span></p>
+                    <span class="text-secondary text-sm">Requiring attention</span>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="reveal card rounded-2xl overflow-hidden">
+                <div class="p-6 border-b border-white/10">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-primary">Detected Issues</h3>
+                        <button class="text-sm text-[#0071e3] hover:underline">View All →</button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="text-left text-sm text-secondary border-b border-white/10">
+                                <th class="px-6 py-4 font-medium">Service</th>
+                                <th class="px-6 py-4 font-medium">Issue</th>
+                                <th class="px-6 py-4 font-medium">Cost</th>
+                                <th class="px-6 py-4 font-medium">Savings</th>
+                                <th class="px-6 py-4 font-medium">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center">
+                                            <i class="fab fa-aws text-white"></i>
+                                        </div>
+                                        <span class="font-medium text-primary">AWS EC2</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-amber-500">Unused instances</td>
+                                <td class="px-6 py-4 text-secondary">$1,240/mo</td>
+                                <td class="px-6 py-4 text-green-500 font-medium">$890</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-500 text-xs font-medium">Review</span>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center">
+                                            <i class="fab fa-slack text-white"></i>
+                                        </div>
+                                        <span class="font-medium text-primary">Slack</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-amber-500">12 inactive seats</td>
+                                <td class="px-6 py-4 text-secondary">$480/mo</td>
+                                <td class="px-6 py-4 text-green-500 font-medium">$288</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-500 text-xs font-medium">Review</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-white/[0.02] transition-colors">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center">
+                                            <i class="fab fa-adobe text-white"></i>
+                                        </div>
+                                        <span class="font-medium text-primary">Adobe CC</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-red-400">Duplicate subscription</td>
+                                <td class="px-6 py-4 text-secondary">$599/mo</td>
+                                <td class="px-6 py-4 text-green-500 font-medium">$599</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-xs font-medium">Critical</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-24 relative">
+        <div class="divider"></div>
+        <div class="max-w-6xl mx-auto px-6 pt-24">
+            <div class="text-center mb-16">
+                <h2 class="reveal text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4 text-primary">
+                    Powerful Features
+                </h2>
+                <p class="reveal text-lg text-secondary">Everything you need to optimize spending</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="reveal card rounded-2xl p-8">
+                    <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-primary">Duplicate Detection</h3>
+                    <p class="text-secondary leading-relaxed">Automatically find duplicate subscriptions across all your accounts and team members.</p>
+                </div>
+
+                <div class="reveal card rounded-2xl p-8">
+                    <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-primary">Cloud Overspend Alerts</h3>
+                    <p class="text-secondary leading-relaxed">Real-time notifications when cloud costs exceed your defined thresholds.</p>
+                </div>
+
+                <div class="reveal card rounded-2xl p-8">
+                    <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-primary">Monthly Reports</h3>
+                    <p class="text-secondary leading-relaxed">Detailed savings reports delivered straight to your inbox every month.</p>
+                </div>
+
+                <div id="api" class="reveal card rounded-2xl p-8">
+                    <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-primary">Developer API</h3>
+                    <p class="text-secondary leading-relaxed">Extract invoices and receipts programmatically with our powerful REST API.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-24 relative">
+        <div class="divider"></div>
+        <div class="max-w-6xl mx-auto px-6 pt-24">
+            <div class="text-center mb-16">
+                <h2 class="reveal text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-4 text-primary">
+                    Simple, Transparent Pricing
+                </h2>
+                <p class="reveal text-lg text-secondary">Start saving today. Cancel anytime.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <!-- Freelancer -->
+                <div class="reveal card rounded-2xl p-8 flex flex-col">
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Freelancer</h3>
+                        <p class="text-secondary text-sm">For individuals and solo entrepreneurs</p>
+                    </div>
+                    <div class="mb-8">
+                        <span class="text-5xl font-semibold text-primary">$19</span>
+                        <span class="text-secondary">/month</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-center gap-3 text-secondary">
+                            <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Up to 5 connected accounts
+                        </li>
+                        <li class="flex items-center gap-3 text-secondary">
+                            <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Monthly savings reports
+                        </li>
+                        <li class="flex items-center gap-3 text-secondary">
+                            <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Email support
+                        </li>
+                    </ul>
+                    <button class="btn-secondary w-full py-3.5 rounded-full font-medium">
+                        Start Free Trial
+                    </button>
+                </div>
+
+                <!-- SMB - Popular -->
+                <div class="reveal pricing-featured rounded-2xl p-8 flex flex-col relative">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+                        <span class="px-4 py-1.5 rounded-full bg-[#0071e3] text-white text-xs font-medium">Most Popular</span>
+                    </div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">SMB</h3>
+                        <p class="text-secondary text-sm">For small and medium businesses</p>
+                    </div>
+                    <div class="mb-8">
+                        <span class="text-5xl font-semibold text-primary">$49</span>
+                        <span class="text-secondary">/month</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-center gap-3 text-secondary">
+                            <svg class="w-5 h-5 text-[#0071e3] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Up to 25 connected accounts
+                        </li>
+                        <li class="flex items-center gap-3 text-secondary">
+                            <svg class="w-5 h-5 text-[#0071e3] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Weekly savings reports
+                        </li>
+                        <li class="flex items-center gap-3 text-secondary">
+                            <svg class="w-5 h-5 text-[#0071e3] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Priority support
+                        </li>
+                        <li class="flex items-center gap-3 text-secondary">
+                            <svg class="w-5 h-5 text-[#0071e3] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            API access
+                        </li>
+                    </ul>
+                    <button class="btn-primary w-full py-3.5 rounded-full font-medium">
+                        Start Free Trial
+                    </button>
+                </div>
+
+                <!-- Mid-Size -->
+                <div class="reveal card rounded-2xl p-8 flex flex-col">
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2 text-primary">Mid-Size</h3>
+                        <p class="text-secondary text-sm">For growing companies</p>
+                    </div>
+                    <div class="mb-8">
+                        <span class="text-5xl font-semibold text-primary">$149</span>
+                        <span class="text-secondary">/month</span>
+                    </div>
+                    <ul class="space-y-4 mb-8 flex-grow">
+                        <li class="flex items-center gap-3 text-secondary">
+                            <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Unlimited accounts
+                        </li>
+                        <li class="flex items-center gap-3 text-secondary">
+                            <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Real-time alerts
+                        </li>
+                        <li class="flex items-center gap-3 text-secondary">
+                            <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Dedicated account manager
+                        </li>
+                        <li class="flex items-center gap-3 text-secondary">
+                            <svg class="w-5 h-5 text-white flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Custom integrations
+                        </li>
+                    </ul>
+                    <button class="btn-secondary w-full py-3.5 rounded-full font-medium">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-32 relative">
+        <div class="divider"></div>
+        <div class="max-w-3xl mx-auto px-6 pt-24 text-center">
+            <h2 class="reveal text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight mb-6 text-primary">
+                Start Saving Today.
+            </h2>
+            <p class="reveal text-xl text-secondary mb-10 max-w-xl mx-auto">
+                Join thousands of companies already saving money with Lumen.
+            </p>
+            <div class="reveal">
+                <button class="btn-primary px-10 py-4 rounded-full text-lg font-medium inline-flex items-center gap-3">
+                    Start Free Trial
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </button>
+                <p class="text-secondary text-sm mt-6">No credit card required · 14-day free trial</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div id="authBackdrop" class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+        
+        <!-- Modal Card -->
+        <div class="relative w-full max-w-md transform transition-all duration-300 scale-95 opacity-0" id="authCard">
+            <div class="card rounded-2xl p-8 bg-[#0a0a0a] border border-white/10">
+                <!-- Close Button -->
+                <button id="closeAuth" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-secondary hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+
+                <!-- Logo -->
+                <div class="flex items-center justify-center gap-2.5 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center">
+                        <svg class="w-6 h-6 text-black" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Error Message -->
+                <div id="authError" class="hidden mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center"></div>
+
+                <!-- Loading State -->
+                <div id="authLoading" class="hidden mb-4 p-3 rounded-xl bg-white/5 border border-white/10 text-secondary text-sm text-center">
+                    <span class="inline-block animate-spin mr-2">⏳</span> Please wait...
+                </div>
+
+                <!-- Sign Up Form (Default) -->
+                <div id="signupForm">
+                    <h2 class="text-2xl font-semibold text-center text-primary mb-2">Start your free trial</h2>
+                    <p class="text-secondary text-center text-sm mb-8">14 days free. No credit card required.</p>
+                    
+                    <form id="signupFormElement" class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-secondary mb-2">Full Name</label>
+                            <input type="text" id="signupName" required 
+                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#0071e3] transition-colors"
+                                placeholder="John Doe">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-secondary mb-2">Email</label>
+                            <input type="email" id="signupEmail" required 
+                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#0071e3] transition-colors"
+                                placeholder="you@company.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-secondary mb-2">Password</label>
+                            <input type="password" id="signupPassword" required minlength="8"
+                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#0071e3] transition-colors"
+                                placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="btn-primary w-full py-3.5 rounded-xl font-medium mt-6">
+                            Create Account
+                        </button>
+                    </form>
+                    
+                    <p class="text-center text-sm text-secondary mt-6">
+                        Already have an account? 
+                        <button id="showSignin" class="text-[#0071e3] hover:underline">Sign in</button>
+                    </p>
+                </div>
+
+                <!-- Sign In Form (Hidden by default) -->
+                <div id="signinForm" class="hidden">
+                    <h2 class="text-2xl font-semibold text-center text-primary mb-2">Welcome back</h2>
+                    <p class="text-secondary text-center text-sm mb-8">Sign in to access your dashboard.</p>
+                    
+                    <form id="signinFormElement" class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-secondary mb-2">Email</label>
+                            <input type="email" id="signinEmail" required 
+                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#0071e3] transition-colors"
+                                placeholder="you@company.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-secondary mb-2">Password</label>
+                            <input type="password" id="signinPassword" required 
+                                class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#0071e3] transition-colors"
+                                placeholder="••••••••">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 rounded bg-white/5 border-white/10 text-[#0071e3] focus:ring-0 focus:ring-offset-0">
+                                <span class="text-sm text-secondary">Remember me</span>
+                            </label>
+                            <button type="button" class="text-sm text-[#0071e3] hover:underline">Forgot password?</button>
+                        </div>
+                        <button type="submit" class="btn-primary w-full py-3.5 rounded-xl font-medium mt-6">
+                            Sign In
+                        </button>
+                    </form>
+                    
+                    <p class="text-center text-sm text-secondary mt-6">
+                        Don't have an account? 
+                        <button id="showSignup" class="text-[#0071e3] hover:underline">Start free trial</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="fixed inset-0 z-[110] hidden items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div id="notificationBackdrop" class="absolute inset-0 bg-black/80 backdrop-filter backdrop-blur-sm"></div>
+        
+        <!-- Modal Card -->
+        <div class="relative w-full max-w-sm transform transition-all duration-300 scale-95 opacity-0" id="notificationCard">
+            <div class="card rounded-2xl p-8 bg-[#0a0a0a] border border-white/10 text-center">
+                <!-- Icon -->
+                <div id="notificationIcon" class="w-16 h-16 rounded-full bg-[#0071e3]/10 flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-[#0071e3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                </div>
+                
+                <!-- Title -->
+                <h3 id="notificationTitle" class="text-2xl font-semibold text-primary mb-3">Welcome!</h3>
+                
+                <!-- Message -->
+                <p id="notificationMessage" class="text-secondary mb-8">You have successfully signed in.</p>
+                
+                <!-- Button -->
+                <button id="notificationClose" class="btn-primary w-full py-3.5 rounded-xl font-medium">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-white/10">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-white flex items-center justify-center">
+                        <svg class="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"/>
+                        </svg>
+                    </div>
+                    <span class="text-lg font-semibold text-primary">Lumen</span>
+                </div>
+                <div class="flex items-center gap-8">
+                    <a href="#" class="text-sm text-secondary hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="text-sm text-secondary hover:text-white transition-colors">Terms</a>
+                    <a href="#" class="text-sm text-secondary hover:text-white transition-colors">Contact</a>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-secondary text-sm">
+                © 2024 Lumen. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+
+        // Mobile menu
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        menuBtn.addEventListener('click', () => mobileMenu.classList.add('active'));
+        closeMenu.addEventListener('click', () => mobileMenu.classList.remove('active'));
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.remove('active'));
+        });
+
+        // Counter animation
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target.toLocaleString();
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start).toLocaleString();
+                }
+            }, 16);
+        }
+
+        // Scroll reveal
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    
+                    // Animate counters
+                    const counters = entry.target.querySelectorAll('.counter');
+                    counters.forEach(counter => {
+                        const target = parseInt(counter.dataset.target);
+                        animateCounter(counter, target);
+                    });
+
+                    // Animate progress bars
+                    const bars = entry.target.querySelectorAll('[data-width]');
+                    bars.forEach(bar => {
+                        setTimeout(() => {
+                            bar.style.width = bar.dataset.width;
+                        }, 300);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Hero counter
+        setTimeout(() => {
+            animateCounter(document.getElementById('heroCounter'), 2732, 2500);
+        }, 500);
+
+        // Animate hero dashboard bars
+        setTimeout(() => {
+            document.querySelectorAll('[data-width]').forEach(bar => {
+                bar.style.width = bar.dataset.width;
+            });
+        }, 800);
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Initial reveal for hero elements
+        setTimeout(() => {
+            document.querySelectorAll('.reveal').forEach((el, i) => {
+                if (el.getBoundingClientRect().top < window.innerHeight) {
+                    setTimeout(() => el.classList.add('active'), i * 80);
+                }
+            });
+        }, 100);
+
+        // ========== SUPABASE AUTH SYSTEM ==========
+        
+        // Initialize Supabase
+        const SUPABASE_URL = 'https://glfonhajcpmwgutsohpi.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdsZm9uaGFqY3Btd2d1dHNvaHBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ2MTAxNDgsImV4cCI6MjA4MDE4NjE0OH0.wmR6zcr4s_9lOu6VsheVuw3_bbNeihNX2d1rLl18DUE';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // DOM Elements
+        const authModal = document.getElementById('authModal');
+        const authCard = document.getElementById('authCard');
+        const authBackdrop = document.getElementById('authBackdrop');
+        const closeAuth = document.getElementById('closeAuth');
+        const signupForm = document.getElementById('signupForm');
+        const signinForm = document.getElementById('signinForm');
+        const showSignin = document.getElementById('showSignin');
+        const showSignup = document.getElementById('showSignup');
+        const signupFormElement = document.getElementById('signupFormElement');
+        const signinFormElement = document.getElementById('signinFormElement');
+        const signinBtn = document.getElementById('signinBtn');
+        const navCTA = document.getElementById('navCTA');
+        const authError = document.getElementById('authError');
+        const authLoading = document.getElementById('authLoading');
+
+        // Show error message
+        function showError(message) {
+            authError.textContent = message;
+            authError.classList.remove('hidden');
+            authLoading.classList.add('hidden');
+        }
+
+        // Hide error message
+        function hideError() {
+            authError.classList.add('hidden');
+        }
+
+        // Show loading state
+        function showLoading() {
+            authLoading.classList.remove('hidden');
+            hideError();
+        }
+
+        // Hide loading state
+        function hideLoading() {
+            authLoading.classList.add('hidden');
+        }
+
+        // Check if user is logged in on page load
+        async function checkAuthState() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                // Get user profile from profiles table
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('name, email')
+                    .eq('id', session.user.id)
+                    .single();
+                
+                const userData = {
+                    id: session.user.id,
+                    email: session.user.email,
+                    name: profile?.name || session.user.email.split('@')[0]
+                };
+                updateUIForLoggedInUser(userData);
+            }
+        }
+
+        // Update UI when user is logged in
+        function updateUIForLoggedInUser(userData) {
+            const displayName = userData.name ? userData.name.split(' ')[0] : userData.email.split('@')[0];
+            
+            // Update navbar
+            signinBtn.textContent = displayName;
+            signinBtn.classList.remove('text-secondary');
+            signinBtn.classList.add('text-white');
+            navCTA.innerHTML = `
+                Dashboard
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+            `;
+            navCTA.classList.add('inline-flex', 'items-center');
+            
+            // Remove old event listeners
+            signinBtn.removeEventListener('click', signinBtnHandler);
+            navCTA.removeEventListener('click', navCTAHandler);
+            
+            // Change signin button to show user menu on click
+            signinBtn.onclick = async () => {
+                if (confirm('Do you want to sign out?')) {
+                    await supabase.auth.signOut();
+                    location.reload();
+                }
+            };
+            
+            // Change CTA to go to dashboard
+            navCTA.onclick = () => {
+                window.location.href = 'dashboard.html';
+            };
+        }
+
+        // Open modal
+        function openAuthModal(showSignUp = true) {
+            hideError();
+            hideLoading();
+            authModal.classList.remove('hidden');
+            authModal.classList.add('flex');
+            
+            // Show correct form
+            if (showSignUp) {
+                signupForm.classList.remove('hidden');
+                signinForm.classList.add('hidden');
+            } else {
+                signupForm.classList.add('hidden');
+                signinForm.classList.remove('hidden');
+            }
+            
+            // Animate in
+            setTimeout(() => {
+                authCard.classList.remove('scale-95', 'opacity-0');
+                authCard.classList.add('scale-100', 'opacity-100');
+            }, 10);
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeAuthModal() {
+            authCard.classList.remove('scale-100', 'opacity-100');
+            authCard.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                authModal.classList.add('hidden');
+                authModal.classList.remove('flex');
+                document.body.style.overflow = '';
+                hideError();
+                hideLoading();
+            }, 300);
+        }
+
+        // Event listeners for opening modal
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+            if (!btn.id || btn.id !== 'navCTA') {
+                btn.addEventListener('click', async (e) => {
+                    const { data: { session } } = await supabase.auth.getSession();
+                    if (!session && btn.textContent.includes('Start Free Trial')) {
+                        e.preventDefault();
+                        openAuthModal(true);
+                    }
+                });
+            }
+        });
+
+        // Store click handlers
+        let navCTAHandler = () => openAuthModal(true);
+        let signinBtnHandler = () => openAuthModal(false);
+
+        // Initialize navbar buttons
+        async function initNavButtons() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                signinBtn.addEventListener('click', signinBtnHandler);
+                navCTA.addEventListener('click', navCTAHandler);
+            }
+        }
+        initNavButtons();
+
+        // Close modal events
+        closeAuth.addEventListener('click', closeAuthModal);
+        authBackdrop.addEventListener('click', closeAuthModal);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeAuthModal();
+        });
+
+        // Toggle between signin and signup
+        showSignin.addEventListener('click', () => {
+            hideError();
+            signupForm.classList.add('hidden');
+            signinForm.classList.remove('hidden');
+        });
+
+        showSignup.addEventListener('click', () => {
+            hideError();
+            signinForm.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+        });
+
+        // Handle signup with Supabase
+        signupFormElement.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading();
+            
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            
+            try {
+                // Sign up with Supabase Auth
+                const { data, error } = await supabase.auth.signUp({
+                    email,
+                    password,
+                    options: {
+                        data: {
+                            name: name
+                        }
+                    }
+                });
+                
+                if (error) throw error;
+                
+                // Update the profile with the name
+                if (data.user) {
+                    await supabase
+                        .from('profiles')
+                        .update({ name: name })
+                        .eq('id', data.user.id);
+                }
+                
+                hideLoading();
+                
+                // Check if email confirmation is required
+                if (data.user && !data.session) {
+                    closeAuthModal();
+                    setTimeout(() => {
+                        showNotification({
+                            title: 'Check Your Email',
+                            message: 'Please check your email to confirm your account.',
+                            type: 'info',
+                            buttonText: 'Got it'
+                        });
+                    }, 400);
+                } else if (data.session) {
+                    // User is logged in immediately
+                    closeAuthModal();
+                    updateUIForLoggedInUser({
+                        id: data.user.id,
+                        email: data.user.email,
+                        name: name
+                    });
+                    setTimeout(() => {
+                        showNotification({
+                            title: `Welcome, ${name.split(' ')[0]}!`,
+                            message: 'Your 14-day free trial has started. Let\'s start saving money.',
+                            type: 'success',
+                            buttonText: 'Get Started'
+                        });
+                    }, 400);
+                }
+            } catch (error) {
+                hideLoading();
+                showError(error.message || 'An error occurred during sign up');
+            }
+        });
+
+        // Handle signin with Supabase
+        signinFormElement.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading();
+            
+            const email = document.getElementById('signinEmail').value;
+            const password = document.getElementById('signinPassword').value;
+            
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email,
+                    password
+                });
+                
+                if (error) throw error;
+                
+                hideLoading();
+                
+                // Get user profile
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('name')
+                    .eq('id', data.user.id)
+                    .single();
+                
+                closeAuthModal();
+                updateUIForLoggedInUser({
+                    id: data.user.id,
+                    email: data.user.email,
+                    name: profile?.name || email.split('@')[0]
+                });
+                
+                const userName = profile?.name ? profile.name.split(' ')[0] : email.split('@')[0];
+                setTimeout(() => {
+                    showNotification({
+                        title: `Welcome back, ${userName}!`,
+                        message: 'Great to see you again. Your dashboard is ready.',
+                        type: 'success',
+                        buttonText: 'Go to Dashboard'
+                    });
+                }, 400);
+            } catch (error) {
+                hideLoading();
+                showError(error.message || 'Invalid email or password');
+            }
+        });
+
+        // Listen for auth state changes
+        supabase.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_IN' && session) {
+                checkAuthState();
+            } else if (event === 'SIGNED_OUT') {
+                location.reload();
+            }
+        });
+
+        // Check auth state on load
+        checkAuthState();
+
+        // ========== NOTIFICATION MODAL SYSTEM ==========
+        
+        const notificationModal = document.getElementById('notificationModal');
+        const notificationCard = document.getElementById('notificationCard');
+        const notificationBackdrop = document.getElementById('notificationBackdrop');
+        const notificationIcon = document.getElementById('notificationIcon');
+        const notificationTitle = document.getElementById('notificationTitle');
+        const notificationMessage = document.getElementById('notificationMessage');
+        const notificationCloseBtn = document.getElementById('notificationClose');
+
+        // Show notification modal
+        function showNotification(options = {}) {
+            const {
+                title = 'Success!',
+                message = 'Operation completed successfully.',
+                type = 'success', // 'success', 'info', 'warning', 'error'
+                buttonText = 'Continue',
+                onClose = null
+            } = options;
+
+            // Set content
+            notificationTitle.textContent = title;
+            notificationMessage.textContent = message;
+            notificationCloseBtn.textContent = buttonText;
+
+            // Set icon based on type
+            const iconColors = {
+                success: { bg: 'bg-green-500/10', text: 'text-green-500', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>' },
+                info: { bg: 'bg-[#0071e3]/10', text: 'text-[#0071e3]', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>' },
+                warning: { bg: 'bg-amber-500/10', text: 'text-amber-500', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>' },
+                error: { bg: 'bg-red-500/10', text: 'text-red-500', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>' }
+            };
+
+            const colorConfig = iconColors[type] || iconColors.success;
+            notificationIcon.className = `w-16 h-16 rounded-full ${colorConfig.bg} flex items-center justify-center mx-auto mb-6`;
+            notificationIcon.innerHTML = `<svg class="w-8 h-8 ${colorConfig.text}" fill="none" stroke="currentColor" viewBox="0 0 24 24">${colorConfig.icon}</svg>`;
+
+            // Show modal
+            notificationModal.classList.remove('hidden');
+            notificationModal.classList.add('flex');
+
+            // Animate in
+            setTimeout(() => {
+                notificationCard.classList.remove('scale-95', 'opacity-0');
+                notificationCard.classList.add('scale-100', 'opacity-100');
+            }, 10);
+
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+
+            // Store callback
+            notificationCloseBtn.onclick = () => {
+                closeNotification();
+                if (onClose) onClose();
+            };
+        }
+
+        // Close notification modal
+        function closeNotification() {
+            notificationCard.classList.remove('scale-100', 'opacity-100');
+            notificationCard.classList.add('scale-95', 'opacity-0');
+
+            setTimeout(() => {
+                notificationModal.classList.add('hidden');
+                notificationModal.classList.remove('flex');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // Close on backdrop click
+        notificationBackdrop.addEventListener('click', closeNotification);
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !notificationModal.classList.contains('hidden')) {
+                closeNotification();
+            }
+        });
+    </script>
+</body>
+</html>
