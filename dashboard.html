@@ -268,28 +268,25 @@
                         <span>Invoices</span>
                     </div>
 
-                    <div class="nav-item opacity-50 cursor-not-allowed" data-page="cloud">
+                    <div class="nav-item" data-page="cloud">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
                         </svg>
                         <span>Cloud Costs</span>
-                        <span class="ml-auto text-xs badge badge-warning">Soon</span>
                     </div>
 
-                    <div class="nav-item opacity-50 cursor-not-allowed" data-page="accounts">
+                    <div class="nav-item" data-page="accounts">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
                         </svg>
                         <span>Accounts</span>
-                        <span class="ml-auto text-xs badge badge-warning">Soon</span>
                     </div>
 
-                    <div class="nav-item opacity-50 cursor-not-allowed" data-page="reports">
+                    <div class="nav-item" data-page="reports">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                         </svg>
                         <span>Reports</span>
-                        <span class="ml-auto text-xs badge badge-warning">Soon</span>
                     </div>
                 </div>
 
@@ -298,21 +295,19 @@
 
                 <!-- Bottom nav items -->
                 <div class="space-y-1">
-                    <div class="nav-item opacity-50 cursor-not-allowed" data-page="settings">
+                    <div class="nav-item" data-page="settings">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
                         <span>Settings</span>
-                        <span class="ml-auto text-xs badge badge-warning">Soon</span>
                     </div>
 
-                    <div class="nav-item opacity-50 cursor-not-allowed" data-page="api">
+                    <div class="nav-item" data-page="api">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
                         </svg>
                         <span>API Keys</span>
-                        <span class="ml-auto text-xs badge badge-warning">Soon</span>
                     </div>
                 </div>
             </nav>
@@ -899,8 +894,622 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Cloud Costs Page -->
+            <div id="cloudPage" class="page">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-primary mb-2">Cloud Costs</h1>
+                    <p class="text-secondary">Monitor and optimize your AWS, GCP, and Azure spending.</p>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-8">
+                    <div class="card rounded-xl p-6">
+                        <span class="text-sm text-secondary block mb-2">Total Cloud Spend</span>
+                        <div class="text-3xl font-semibold text-primary">$8,432</div>
+                        <div class="flex items-center gap-2 text-sm mt-1">
+                            <span class="text-red-400">↑ 12%</span>
+                            <span class="text-secondary">vs last month</span>
+                        </div>
+                    </div>
+                    <div class="card rounded-xl p-6">
+                        <span class="text-sm text-secondary block mb-2">Potential Savings</span>
+                        <div class="text-3xl font-semibold text-green-500">$1,890</div>
+                    </div>
+                    <div class="card rounded-xl p-6">
+                        <span class="text-sm text-secondary block mb-2">Active Resources</span>
+                        <div class="text-3xl font-semibold text-primary">127</div>
+                    </div>
+                    <div class="card rounded-xl p-6">
+                        <span class="text-sm text-secondary block mb-2">Anomalies</span>
+                        <div class="text-3xl font-semibold text-amber-500">5</div>
+                    </div>
+                </div>
+
+                <!-- Cloud Provider Breakdown -->
+                <div class="grid lg:grid-cols-3 gap-6 mb-8">
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-lg bg-[#FF9900]/10 flex items-center justify-center">
+                                <i class="fab fa-aws text-[#FF9900]"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-primary">Amazon Web Services</h3>
+                                <p class="text-xs text-secondary">12 services active</p>
+                            </div>
+                        </div>
+                        <div class="text-2xl font-semibold text-primary mb-3">$5,240</div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-secondary">EC2</span>
+                                <span class="text-primary">$2,100</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-secondary">S3</span>
+                                <span class="text-primary">$890</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-secondary">RDS</span>
+                                <span class="text-primary">$1,450</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-lg bg-[#4285F4]/10 flex items-center justify-center">
+                                <i class="fab fa-google text-[#4285F4]"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-primary">Google Cloud Platform</h3>
+                                <p class="text-xs text-secondary">8 services active</p>
+                            </div>
+                        </div>
+                        <div class="text-2xl font-semibold text-primary mb-3">$2,150</div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-secondary">Compute Engine</span>
+                                <span class="text-primary">$980</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-secondary">Cloud Storage</span>
+                                <span class="text-primary">$420</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-secondary">BigQuery</span>
+                                <span class="text-primary">$750</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-lg bg-[#0078D4]/10 flex items-center justify-center">
+                                <i class="fab fa-microsoft text-[#0078D4]"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-primary">Microsoft Azure</h3>
+                                <p class="text-xs text-secondary">5 services active</p>
+                            </div>
+                        </div>
+                        <div class="text-2xl font-semibold text-primary mb-3">$1,042</div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-secondary">Virtual Machines</span>
+                                <span class="text-primary">$620</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-secondary">Blob Storage</span>
+                                <span class="text-primary">$180</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-secondary">SQL Database</span>
+                                <span class="text-primary">$242</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anomalies Table -->
+                <div class="card rounded-xl overflow-hidden">
+                    <div class="p-6 border-b border-white/10">
+                        <h2 class="text-lg font-semibold text-primary">Cost Anomalies & Optimization</h2>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left text-sm text-secondary border-b border-white/10">
+                                    <th class="px-6 py-4 font-medium">Resource</th>
+                                    <th class="px-6 py-4 font-medium">Provider</th>
+                                    <th class="px-6 py-4 font-medium">Issue</th>
+                                    <th class="px-6 py-4 font-medium">Cost Impact</th>
+                                    <th class="px-6 py-4 font-medium">Status</th>
+                                    <th class="px-6 py-4 font-medium">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm">
+                                <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                    <td class="px-6 py-4 font-medium text-primary">i-0abc123def (EC2)</td>
+                                    <td class="px-6 py-4"><span class="text-[#FF9900]">AWS</span></td>
+                                    <td class="px-6 py-4 text-amber-400">0% CPU utilization for 7 days</td>
+                                    <td class="px-6 py-4 text-green-500">Save $340/mo</td>
+                                    <td class="px-6 py-4"><span class="badge badge-warning">Review</span></td>
+                                    <td class="px-6 py-4"><button class="text-[#0071e3] hover:underline">Terminate</button></td>
+                                </tr>
+                                <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                    <td class="px-6 py-4 font-medium text-primary">prod-db-backup (S3)</td>
+                                    <td class="px-6 py-4"><span class="text-[#FF9900]">AWS</span></td>
+                                    <td class="px-6 py-4 text-amber-400">Old backups not deleted</td>
+                                    <td class="px-6 py-4 text-green-500">Save $180/mo</td>
+                                    <td class="px-6 py-4"><span class="badge badge-warning">Review</span></td>
+                                    <td class="px-6 py-4"><button class="text-[#0071e3] hover:underline">Configure</button></td>
+                                </tr>
+                                <tr class="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
+                                    <td class="px-6 py-4 font-medium text-primary">vm-staging-01</td>
+                                    <td class="px-6 py-4"><span class="text-[#4285F4]">GCP</span></td>
+                                    <td class="px-6 py-4 text-red-400">Oversized instance</td>
+                                    <td class="px-6 py-4 text-green-500">Save $520/mo</td>
+                                    <td class="px-6 py-4"><span class="badge badge-danger">Critical</span></td>
+                                    <td class="px-6 py-4"><button class="text-[#0071e3] hover:underline">Resize</button></td>
+                                </tr>
+                                <tr class="hover:bg-white/[0.02] transition-colors">
+                                    <td class="px-6 py-4 font-medium text-primary">unattached-disk-03</td>
+                                    <td class="px-6 py-4"><span class="text-[#0078D4]">Azure</span></td>
+                                    <td class="px-6 py-4 text-amber-400">Unattached disk</td>
+                                    <td class="px-6 py-4 text-green-500">Save $45/mo</td>
+                                    <td class="px-6 py-4"><span class="badge badge-warning">Review</span></td>
+                                    <td class="px-6 py-4"><button class="text-[#0071e3] hover:underline">Delete</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accounts Page -->
+            <div id="accountsPage" class="page">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-primary mb-2">Connected Accounts</h1>
+                    <p class="text-secondary">Manage your connected data sources for automatic expense tracking.</p>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                    <div class="card rounded-xl p-6">
+                        <span class="text-sm text-secondary block mb-2">Connected Accounts</span>
+                        <div class="text-3xl font-semibold text-primary">7</div>
+                    </div>
+                    <div class="card rounded-xl p-6">
+                        <span class="text-sm text-secondary block mb-2">Last Sync</span>
+                        <div class="text-3xl font-semibold text-primary">2 min ago</div>
+                    </div>
+                    <div class="card rounded-xl p-6">
+                        <span class="text-sm text-secondary block mb-2">Data Points</span>
+                        <div class="text-3xl font-semibold text-primary">12,847</div>
+                    </div>
+                </div>
+
+                <!-- Add New Connection -->
+                <div class="card rounded-xl p-6 mb-8">
+                    <h2 class="text-lg font-semibold text-primary mb-4">Add New Connection</h2>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <button class="p-4 rounded-xl border border-white/10 hover:border-[#0071e3] hover:bg-white/[0.02] transition-all text-left">
+                            <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center mb-3">
+                                <i class="fab fa-google text-red-400"></i>
+                            </div>
+                            <h3 class="font-medium text-primary mb-1">Gmail</h3>
+                            <p class="text-xs text-secondary">Scan for invoices and receipts</p>
+                        </button>
+                        <button class="p-4 rounded-xl border border-white/10 hover:border-[#0071e3] hover:bg-white/[0.02] transition-all text-left">
+                            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center mb-3">
+                                <i class="fas fa-university text-green-400"></i>
+                            </div>
+                            <h3 class="font-medium text-primary mb-1">Bank Account</h3>
+                            <p class="text-xs text-secondary">Connect via Plaid</p>
+                        </button>
+                        <button class="p-4 rounded-xl border border-white/10 hover:border-[#0071e3] hover:bg-white/[0.02] transition-all text-left">
+                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center mb-3">
+                                <i class="fas fa-cloud text-blue-400"></i>
+                            </div>
+                            <h3 class="font-medium text-primary mb-1">Cloud Provider</h3>
+                            <p class="text-xs text-secondary">AWS, GCP, or Azure</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Connected Accounts List -->
+                <div class="card rounded-xl overflow-hidden">
+                    <div class="p-6 border-b border-white/10">
+                        <h2 class="text-lg font-semibold text-primary">Your Connections</h2>
+                    </div>
+                    <div class="divide-y divide-white/5">
+                        <div class="p-6 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center">
+                                    <i class="fab fa-google text-red-400 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-primary">Gmail - john@company.com</h3>
+                                    <p class="text-sm text-secondary">Last synced 2 minutes ago • 1,247 invoices found</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="badge badge-success">Connected</span>
+                                <button class="text-secondary hover:text-white"><i class="fas fa-sync"></i></button>
+                                <button class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="p-6 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-[#FF9900]/10 flex items-center justify-center">
+                                    <i class="fab fa-aws text-[#FF9900] text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-primary">AWS - Production Account</h3>
+                                    <p class="text-sm text-secondary">Last synced 5 minutes ago • Cost Explorer connected</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="badge badge-success">Connected</span>
+                                <button class="text-secondary hover:text-white"><i class="fas fa-sync"></i></button>
+                                <button class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="p-6 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-[#4285F4]/10 flex items-center justify-center">
+                                    <i class="fab fa-google text-[#4285F4] text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-primary">Google Cloud Platform</h3>
+                                    <p class="text-sm text-secondary">Last synced 1 hour ago • Billing export connected</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="badge badge-success">Connected</span>
+                                <button class="text-secondary hover:text-white"><i class="fas fa-sync"></i></button>
+                                <button class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="p-6 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center">
+                                    <i class="fas fa-university text-green-400 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-primary">Chase Business Checking</h3>
+                                    <p class="text-sm text-secondary">Last synced 30 minutes ago • 892 transactions</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="badge badge-success">Connected</span>
+                                <button class="text-secondary hover:text-white"><i class="fas fa-sync"></i></button>
+                                <button class="text-red-400 hover:text-red-300"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Page -->
+            <div id="reportsPage" class="page">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-primary mb-2">Savings Reports</h1>
+                    <p class="text-secondary">Monthly insights on your spending optimization and savings opportunities.</p>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-8">
+                    <div class="card rounded-xl p-6">
+                        <span class="text-sm text-secondary block mb-2">Total Saved (YTD)</span>
+                        <div class="text-3xl font-semibold text-green-500">$18,432</div>
+                    </div>
+                    <div class="card rounded-xl p-6">
+                        <span class="text-sm text-secondary block mb-2">This Month</span>
+                        <div class="text-3xl font-semibold text-green-500">$2,732</div>
+                    </div>
+                    <div class="card rounded-xl p-6">
+                        <span class="text-sm text-secondary block mb-2">Reports Generated</span>
+                        <div class="text-3xl font-semibold text-primary">12</div>
+                    </div>
+                    <div class="card rounded-xl p-6">
+                        <span class="text-sm text-secondary block mb-2">Avg. Monthly Savings</span>
+                        <div class="text-3xl font-semibold text-primary">$1,536</div>
+                    </div>
+                </div>
+
+                <!-- Reports List -->
+                <div class="card rounded-xl overflow-hidden">
+                    <div class="p-6 border-b border-white/10 flex items-center justify-between">
+                        <h2 class="text-lg font-semibold text-primary">Monthly Reports</h2>
+                        <button class="btn-primary px-4 py-2 rounded-lg text-sm">Generate Report</button>
+                    </div>
+                    <div class="divide-y divide-white/5">
+                        <div class="p-6 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-[#0071e3]/10 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-[#0071e3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-primary">January 2025 Savings Report</h3>
+                                    <p class="text-sm text-secondary">Generated Jan 31, 2025 • 14 optimizations found</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="text-green-500 font-semibold">$2,732 saved</span>
+                                <button class="text-[#0071e3] hover:underline text-sm">View</button>
+                                <button class="text-secondary hover:text-white text-sm">Download PDF</button>
+                            </div>
+                        </div>
+
+                        <div class="p-6 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-primary">December 2024 Savings Report</h3>
+                                    <p class="text-sm text-secondary">Generated Dec 31, 2024 • 11 optimizations found</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="text-green-500 font-semibold">$1,890 saved</span>
+                                <button class="text-[#0071e3] hover:underline text-sm">View</button>
+                                <button class="text-secondary hover:text-white text-sm">Download PDF</button>
+                            </div>
+                        </div>
+
+                        <div class="p-6 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-primary">November 2024 Savings Report</h3>
+                                    <p class="text-sm text-secondary">Generated Nov 30, 2024 • 9 optimizations found</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="text-green-500 font-semibold">$1,456 saved</span>
+                                <button class="text-[#0071e3] hover:underline text-sm">View</button>
+                                <button class="text-secondary hover:text-white text-sm">Download PDF</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div id="settingsPage" class="page">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-primary mb-2">Settings</h1>
+                    <p class="text-secondary">Manage your account preferences and notifications.</p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-6">
+                    <!-- Profile Settings -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="card rounded-xl p-6">
+                            <h2 class="text-lg font-semibold text-primary mb-6">Profile Information</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm text-secondary mb-2">Full Name</label>
+                                    <input type="text" value="John Doe" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-[#0071e3] transition-colors">
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-secondary mb-2">Email Address</label>
+                                    <input type="email" value="john@company.com" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-[#0071e3] transition-colors">
+                                </div>
+                                <div>
+                                    <label class="block text-sm text-secondary mb-2">Company</label>
+                                    <input type="text" value="Acme Inc." class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-[#0071e3] transition-colors">
+                                </div>
+                                <button class="btn-primary px-6 py-3 rounded-lg text-sm">Save Changes</button>
+                            </div>
+                        </div>
+
+                        <div class="card rounded-xl p-6">
+                            <h2 class="text-lg font-semibold text-primary mb-6">Notification Preferences</h2>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                                    <div>
+                                        <h3 class="font-medium text-primary">Email Alerts</h3>
+                                        <p class="text-sm text-secondary">Receive critical alerts via email</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" checked class="sr-only peer">
+                                        <div class="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0071e3]"></div>
+                                    </label>
+                                </div>
+                                <div class="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                                    <div>
+                                        <h3 class="font-medium text-primary">Weekly Digest</h3>
+                                        <p class="text-sm text-secondary">Get a weekly summary of savings</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" checked class="sr-only peer">
+                                        <div class="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0071e3]"></div>
+                                    </label>
+                                </div>
+                                <div class="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                                    <div>
+                                        <h3 class="font-medium text-primary">Monthly Reports</h3>
+                                        <p class="text-sm text-secondary">Automatically send monthly PDF reports</p>
+                                    </div>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" class="sr-only peer">
+                                        <div class="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0071e3]"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="space-y-6">
+                        <div class="card rounded-xl p-6">
+                            <h2 class="text-lg font-semibold text-primary mb-4">Your Plan</h2>
+                            <div class="p-4 bg-[#0071e3]/10 border border-[#0071e3]/20 rounded-lg mb-4">
+                                <h3 class="font-semibold text-[#0071e3]">SMB Plan</h3>
+                                <p class="text-sm text-secondary">$49/month</p>
+                            </div>
+                            <p class="text-sm text-secondary mb-4">25 accounts • Weekly reports • API access</p>
+                            <button class="w-full btn-secondary py-3 rounded-lg text-sm">Upgrade Plan</button>
+                        </div>
+
+                        <div class="card rounded-xl p-6">
+                            <h2 class="text-lg font-semibold text-primary mb-4">Danger Zone</h2>
+                            <button class="w-full py-3 rounded-lg text-sm text-red-400 border border-red-400/20 hover:bg-red-500/10 transition-colors">Delete Account</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Keys Page -->
+            <div id="apiPage" class="page">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-primary mb-2">API Keys</h1>
+                    <p class="text-secondary">Manage your API keys for programmatic access to Lumen.</p>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                    <div class="card rounded-xl p-6">
+                        <span class="text-sm text-secondary block mb-2">Active Keys</span>
+                        <div class="text-3xl font-semibold text-primary">3</div>
+                    </div>
+                    <div class="card rounded-xl p-6">
+                        <span class="text-sm text-secondary block mb-2">API Calls (This Month)</span>
+                        <div class="text-3xl font-semibold text-primary">12,847</div>
+                    </div>
+                    <div class="card rounded-xl p-6">
+                        <span class="text-sm text-secondary block mb-2">Rate Limit</span>
+                        <div class="text-3xl font-semibold text-primary">1000/min</div>
+                    </div>
+                </div>
+
+                <!-- Create New Key -->
+                <div class="card rounded-xl p-6 mb-8">
+                    <h2 class="text-lg font-semibold text-primary mb-4">Create New API Key</h2>
+                    <div class="flex gap-4">
+                        <input type="text" placeholder="Key name (e.g., Production Server)" class="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-secondary focus:outline-none focus:border-[#0071e3] transition-colors">
+                        <button class="btn-primary px-6 py-3 rounded-lg text-sm whitespace-nowrap">Generate Key</button>
+                    </div>
+                </div>
+
+                <!-- API Keys List -->
+                <div class="card rounded-xl overflow-hidden mb-8">
+                    <div class="p-6 border-b border-white/10">
+                        <h2 class="text-lg font-semibold text-primary">Your API Keys</h2>
+                    </div>
+                    <div class="divide-y divide-white/5">
+                        <div class="p-6 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
+                                    <i class="fas fa-key text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-primary">Production Server</h3>
+                                    <p class="text-sm text-secondary font-mono">lm_live_****************************a8f2</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="badge badge-success">Active</span>
+                                <span class="text-sm text-secondary">8,421 calls</span>
+                                <button class="text-red-400 hover:text-red-300 text-sm">Revoke</button>
+                            </div>
+                        </div>
+
+                        <div class="p-6 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                                    <i class="fas fa-key text-amber-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-primary">Staging Environment</h3>
+                                    <p class="text-sm text-secondary font-mono">lm_test_****************************b3c1</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="badge badge-success">Active</span>
+                                <span class="text-sm text-secondary">3,892 calls</span>
+                                <button class="text-red-400 hover:text-red-300 text-sm">Revoke</button>
+                            </div>
+                        </div>
+
+                        <div class="p-6 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
+                                    <i class="fas fa-key text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-primary">CI/CD Pipeline</h3>
+                                    <p class="text-sm text-secondary font-mono">lm_live_****************************d9e4</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <span class="badge badge-success">Active</span>
+                                <span class="text-sm text-secondary">534 calls</span>
+                                <button class="text-red-400 hover:text-red-300 text-sm">Revoke</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Documentation -->
+                <div class="card rounded-xl p-6">
+                    <h2 class="text-lg font-semibold text-primary mb-4">Quick Start</h2>
+                    <div class="bg-black/50 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+                        <pre class="text-secondary"><span class="text-green-400">curl</span> -X GET https://api.lumen.finance/v1/invoices \
+  -H <span class="text-amber-400">"Authorization: Bearer lm_live_your_api_key"</span> \
+  -H <span class="text-amber-400">"Content-Type: application/json"</span></pre>
+                    </div>
+                    <div class="mt-4 flex gap-4">
+                        <a href="#" class="text-[#0071e3] hover:underline text-sm">View Full Documentation →</a>
+                        <a href="#" class="text-secondary hover:text-white text-sm">API Reference</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
+
+    <!-- Notification Modal for Coming Soon -->
+    <div id="comingSoonModal" class="fixed inset-0 z-[200] hidden items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div id="comingSoonBackdrop" class="absolute inset-0 bg-black/80 backdrop-filter backdrop-blur-sm"></div>
+        
+        <!-- Modal Card -->
+        <div class="relative w-full max-w-sm transform transition-all duration-300 scale-95 opacity-0" id="comingSoonCard">
+            <div class="rounded-2xl p-8 bg-[#0a0a0a] border border-white/10 text-center">
+                <!-- Icon -->
+                <div class="w-16 h-16 rounded-full bg-[#0071e3]/10 flex items-center justify-center mx-auto mb-6">
+                    <svg class="w-8 h-8 text-[#0071e3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                
+                <!-- Title -->
+                <h3 class="text-2xl font-semibold text-white mb-3">Coming Soon! 🚀</h3>
+                
+                <!-- Message -->
+                <p class="text-[#86868b] mb-8">The dashboard is currently in development. We're working hard to bring you an amazing experience. Check back soon!</p>
+                
+                <!-- Button -->
+                <button id="comingSoonClose" class="btn-primary w-full py-3.5 rounded-xl font-medium">
+                    Back to Home
+                </button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Initialize Supabase (if you want auth to work)
@@ -1036,12 +1645,58 @@
             }
         });
 
-        // Check auth on load
+        // Coming Soon Modal functions
+        function showComingSoon() {
+            const modal = document.getElementById('comingSoonModal');
+            const card = document.getElementById('comingSoonCard');
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Animate in
+            setTimeout(() => {
+                card.classList.remove('scale-95', 'opacity-0');
+                card.classList.add('scale-100', 'opacity-100');
+            }, 10);
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close button handler
+        document.getElementById('comingSoonClose').addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+
+        // Backdrop click handler
+        document.getElementById('comingSoonBackdrop').addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+
+        // Check auth on load - WITH ROLE CHECK
         async function checkAuth() {
             const { data: { session } } = await supabase.auth.getSession();
+            
+            // If not logged in, redirect to home
             if (!session) {
                 window.location.href = 'index.html';
+                return;
             }
+            
+            // Check user role from profiles table
+            const { data: profile, error } = await supabase
+                .from('profiles')
+                .select('role')
+                .eq('id', session.user.id)
+                .single();
+            
+            // If no profile or role is not admin, show coming soon
+            if (error || !profile || profile.role !== 'admin') {
+                showComingSoon();
+                return;
+            }
+            
+            // User is admin - allow access (dashboard content stays visible)
         }
         checkAuth();
 
@@ -1295,7 +1950,7 @@
                     emptyState.style.display = '';
                 } else {
                     emptyState.style.display = 'none';
-
+                    
                     // Clear existing rows (except empty state)
                     while (tbody.children.length > 1) {
                         tbody.removeChild(tbody.lastChild);
